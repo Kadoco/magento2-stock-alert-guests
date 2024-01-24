@@ -1,0 +1,33 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Kadoco\StockAlertGuests\ViewModel\ConfigurationStockDataProvider $stockStatusConfigProvider */
+$stockStatusConfigProvider = $block->getData('ConfigurationStockDataProvider');
+$config = $stockStatusConfigProvider->execute();
+$isActive = isset($config['isActive']) ? $config['isActive']: false;
+?>
+<?php if($isActive): ?>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "stockalertform": {
+                        "component": "Kadoco_StockAlertGuests/js/configurableStockalertform",
+                        "template": "Kadoco_StockAlertGuests/stockformguest",
+                        "config": <?=json_encode($config, JSON_PRETTY_PRINT)?>
+                    }
+                }
+            }
+        }
+    }
+</script>
+<script type="text/javascript">
+    require(["jquery"], function($){
+        $('.super-attribute-select').prop( "disabled", true );
+    });
+</script>
+<div class="stock-guest" id="stock-alert-guest" data-bind="scope: 'stockalertform'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<?php endif; ?>

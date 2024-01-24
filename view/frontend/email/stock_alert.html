@@ -1,0 +1,24 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "One product is back in stock"}} @-->
+<!--@vars {
+"var productName":"Product Name",
+"var productUrl":"Product",
+"template config_path=\"design\/email\/footer_template\"":"Email Footer Template",
+"template config_path=\"design\/email\/header_template\"":"Email Header Template"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p class="greeting">
+    {{trans "You are subscribed to a stock alert, the product is back in stock"}}
+</p>
+<p>
+    {{var productName|raw}} {{trans "is back in stock."}} <a href="{{var productUrl|raw}}"> {{trans "click here"}}</a> {{trans "to go to the product"}}
+</p>
+
+{{template config_path="design/email/footer_template"}}

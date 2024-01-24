@@ -1,0 +1,54 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Kadoco\StockAlertGuests\ViewModel\SimpleStockDataProvider $stockStatusConfigProvider */
+$stockStatusConfigProvider = $block->getData('SimpleStockDataProvider');
+$config = $stockStatusConfigProvider->execute();
+$isActive = isset($config['isActive']) ? $config['isActive'] : false;
+?>
+<?php if ($isActive
+    && ($stockStatusConfigProvider->isSimpleProduct() && $stockStatusConfigProvider->isOutOfStock())
+    || (($stockStatusConfigProvider->isConfigurableProduct() && $stockStatusConfigProvider->isOutOfStock()))): ?>
+    <div class="out-of-stock-subscription" data-bind="scope: 'stockalertform'">
+        <div class="out-of-stock-subscription-row-1">
+            <div class="stock-guest-box not-in-stock">
+                <span>
+                    IKKE PÅ LAGER
+                </span>
+            </div>
+        </div>
+        <div class="note-wrapper">
+            <div class="stock-guest-note" data-bind="text: note"></div>
+            <div class="stock-guest-note-success" data-bind="text: successNote"></div>
+        </div>
+        <div class="out-of-stock-subscription-row-2">
+            <div class="out-of-stock-subscription-row-2-column-1 stock-guest-box stock-guest email-address">
+                <input type="text" value="" placeholder="Email adresse" id="stock-guest-email">
+            </div>
+            <div class="out-of-stock-subscription-row-2-column-2 stock-guest-box stock-guest notify-me">
+                <button type="submit" data-bind="click: submitAlert">
+                <span>
+                    UNDERRET MIG NÅR<br>VAREN ER PÅ LAGER
+                </span>
+                </button>
+            </div>
+            <input type="hidden" name="product_id" value="<?=$stockStatusConfigProvider->getProductId()?>"/>
+        </div>
+
+        <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Magento_Ui/js/core/app": {
+                        "components": {
+                            "stockalertform": {
+                                "component": "Kadoco_StockAlertGuests/js/stockalertform",
+                                "template": "Kadoco_StockAlertGuests/stockformguest",
+                                "config": <?=json_encode($config, JSON_PRETTY_PRINT)?>
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+
+    </div>
+<?php endif; ?>

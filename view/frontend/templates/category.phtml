@@ -1,0 +1,56 @@
+<?php
+/** @var \Kadoco\StockAlertGuests\Block\CategoryStockAlert $block */
+/** @var \Kadoco\StockAlertGuests\ViewModel\StockAlertProductProvider $stockAlertProductProvider */
+/** @var \Magento\Framework\Escaper $escaper */
+$product = $block->getProduct();
+$productId = $product->getId();
+?>
+<div class="stock-alert-category" data-bind="scope: 'stockalertform-<?=$productId?>'">
+    <button type="button"
+            title="<?= $escaper->escapeHtmlAttr(__('Subscribe stock updates')) ?>"
+            class="action tocart primary" data-bind="click: submitAlert">
+        <span>
+            <?= $escaper->escapeHtml(__('Subscribe stock updates')) ?>
+        </span>
+    </button>
+    <div class="stock-alert-category__wrapper stock-alert-category__wrapper-<?=$productId?>">
+        <div class="note-wrapper note-wrapper-<?=$productId?>">
+            <div class="stock-guest-note stock-guest-note-<?=$productId?>" data-bind="text: note"></div>
+            <div class="stock-guest-note-success stock-guest-note-success-<?=$productId?>" data-bind="text: successNote"></div>
+        </div>
+        <div class="stock-alert-category__header">
+            <?=__('Tilmeld dig ventelisten, og få besked når dette produkt er på lager igen')?>
+        </div>
+        <div class="stock-alert-category__body">
+            <input type="text" value="" placeholder="Email adresse" id="stock-guest-email-<?=$productId?>">
+        </div>
+        <button type="button"
+                title="<?= $escaper->escapeHtmlAttr(__('Tilmeld')) ?>"
+                class="action tocart primary"
+                data-bind="click: submitForm"
+        >
+            <span>
+                <?= $escaper->escapeHtml(__('Tilmeld')) ?>
+            </span>
+        </button>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "stockalertform-<?=$productId?>": {
+                        "component": "Kadoco_StockAlertGuests/js/categoryStockalertform",
+                        "config": <?=json_encode(
+                            [
+                                'productId' => $productId,
+                                'stockUrl' => $block->getUrl('stockalert/index/post',['_secure' => true])
+                            ]
+                            , JSON_PRETTY_PRINT)?>
+                    }
+                }
+            }
+        }
+    }
+</script>

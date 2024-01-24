@@ -1,0 +1,43 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Kadoco\StockAlertGuests\ViewModel\StockAlertProductProvider $stockAlertProductProvider */
+$stockAlertProductProvider = $block->getData('StockAlertProductProvider');
+$product = $stockAlertProductProvider->execute();
+?>
+<?php if($product): ?>
+    <h2>
+        <?=__('Subscribe to stock alerts for:')?> <?=$product->getName()?>
+    </h2>
+    <div class="stock-alert-content">
+        <form class="form stock-alert"
+              action="<?php echo $this->getUrl('stockalert/index/subscribe', ['_secure' => true]);?>"
+              id="stock-alert-form"
+              method="post"
+              data-hasrequired="<?php  echo __('* Required Fields') ?>"
+              data-mage-init='{"validation":{}}'>
+            <input type="hidden" name="subscribe_id" value="<?=$product->getId()?>" />
+
+            <fieldset class="fieldset">
+                <div class="field email required">
+                    <label class="label" for="email"><span><?= __('Email')?></span></label>
+                    <div class="control">
+                        <input name="email" title="<?= __('Email') ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}" placeholder="<?=__('Email')?>"/>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" title="<?= __('Submit') ?>" class="action submit primary">
+                        <span><?=__('Submit')?></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <style>
+        .page.messages{
+            display:block !important;
+        }
+    </style>
+<?php endif; ?>

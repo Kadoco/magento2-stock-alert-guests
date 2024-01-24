@@ -1,0 +1,86 @@
+& when (@media-common = true) {
+    .stock-alert-category__header{
+        margin-top:15px;
+        margin-bottom:15px;
+    }
+    .stock-alert-category__body{
+        margin-bottom:15px;
+    }
+    .stock-alert-category__wrapper{
+        display: none;
+        .note-wrapper{
+            margin-top:15px;
+            .stock-guest-note{
+                color:red;
+                font-weight:bold;
+            }
+            .stock-guest-note-success{
+                color:green;
+                font-weight:bold;
+            }
+        }
+    }
+    .stock-guest{
+        display:flex;
+        flex-direction: column;
+        .not-in-stock{
+            background-color:#C4C4C4;
+            color:white;
+            text-transform: uppercase;
+            font-weight:600;
+        }
+    }
+    .stock-alert-category{
+        margin-top:15px;
+    }
+    .product-info-main{
+        .product-info-price,
+        .product-options-wrapper{
+            flex-flow: column;
+            .note-wrapper{
+                margin-top:5px;
+                margin-bottom:2px;
+            }
+            .out-of-stock-subscription{
+                margin-top:20px;
+                &-row-1{
+                    .not-in-stock{
+                        font-family:'open_sans';
+                        color:white;
+                        font-size:14px;
+                        padding:10px;
+                        text-align: center;
+                        background-color:#B2B0B2;
+                        font-weight:800;
+                    }
+                }
+                &-row-2{
+                    margin-top:7px;
+                    display:flex;
+                    &-column-1{
+                        flex:1 1 50%;
+                        #stock-guest-email{
+                            height:100%;
+                        }
+                    }
+                    &-column-2{
+                        flex:1 1 50%;
+                        button{
+                            span{
+                                font-size:14px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
